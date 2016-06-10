@@ -15,7 +15,9 @@ make
 
 Bell State ZZ Measurement
 
-BellStateZZMeasurement.q
+![BellStateZZMeasurement](resources/graphicExample.png)
+
+###BellStateZZMeasurement.q
 
 ```c
 h q[1];
@@ -24,9 +26,7 @@ measure q[1];
 measure q[2];
 ```
 
-![BellStateZZMeasurement](resources/graphicExample.png)
-
-BellStateZZMeasurement.json
+###BellStateZZMeasurement.json
 
 ```javascript
 {
@@ -79,7 +79,7 @@ BellStateZZMeasurement.json
 
 ## Syntax
 
-```
+```c
 x q[n];
 y q[n];
 z q[n];
