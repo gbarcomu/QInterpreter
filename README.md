@@ -11,9 +11,7 @@ Using a command-line, go to the project folder, execute
 make
 ./QInterpreter file.q
 ```
-## Example
-
-Bell State ZZ Measurement
+## Example Bell State ZZ Measurement
 
 ![BellStateZZMeasurement](resources/graphicExample.png)
 
