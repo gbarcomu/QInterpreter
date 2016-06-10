@@ -30,4 +30,4 @@ lex.yy.c: lexico.l
 	flex lexico.l
 
 clean : 
-	rm  -f *.o lex.yy.c expresiones.c expresiones.h
+	rm  -f *.o lex.yy.c expresiones.c expresiones.h QInterpreter

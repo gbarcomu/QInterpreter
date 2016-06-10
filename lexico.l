@@ -11,7 +11,7 @@ int n_lineas;
 %%
 
 "//"					BEGIN(COM);
-<COM>"\n"				BEGIN(0);
+<COM>"\n"				BEGIN(0); n_lineas++;
 
 <COM>.					;
 

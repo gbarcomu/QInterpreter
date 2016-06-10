@@ -1,3 +1,108 @@
 # QInterpreter
 
+This Interpreter is based on [IBM Quantum Experience Processor](https://quantumexperience.ng.bluemix.net).
+
+Given a ".q" file with instructions generates a ".json" file similar to the IBM API response.
+
+## Start Up
+
+Using a command-line, go to the project folder, execute 
+```
+make
+./QInterpreter file.q
+```
+## Example
+
+Bell State ZZ Measurement
+
+BellStateZZMeasurement.q
+
+```c
+h q[1];
+cx q[1], q[2];
+measure q[1];
+measure q[2];
+```
+
+![BellStateZZMeasurement](resources/graphicExample.png)
+
+BellStateZZMeasurement.json
+
+```javascript
+{
+    "jsonQasm": {
+        "playground": [{
+            "line": 0,
+            "name": "q",
+            "gates": []
+        }, {
+            "line": 1,
+            "name": "q",
+            "gates": [{
+                "position": 0,
+                "name": "h"
+            }, {
+                "position": 2,
+                "name": "measure"
+            }]
+        }, {
+            "line": 2,
+            "name": "q",
+            "gates": [{
+                "position": 1,
+                "name": "cx",
+                "to": 1
+            }, {
+                "position": 2,
+                "name": "measure"
+            }]
+        }, {
+            "line": 3,
+            "name": "q",
+            "gates": []
+        }, {
+            "line": 4,
+            "name": "q",
+            "gates": []
+        }],
+        "numberColumns": 40,
+        "numberLines": 5,
+        "numberGates": 4,
+        "hasMeasures": true
+    }
+}
+```
+
+## Architecture
+
 ![Architecture](resources/architecture.png)
+
+## Syntax
+
+```
+x q[n];
+y q[n];
+z q[n];
+id q[n];
+h q[n];
+s q[n];
+t q[n];
+tdg q[n];
+sdg q[n];
+cx q[n], q[m];
+measure q[n];
+bloch q[n];
+```
+
+So that m, n between 0-4.
+
+Comments with "//"
+
+## Errors Controlled
+
+* Syntax errors
+* Positions out of bounds (bits 0-4, positions 0-39)
+* No measures
+* Two kinds of measures
+
+In that cases, the ".json" file is not generated.
