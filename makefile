@@ -44,7 +44,7 @@ $(GENDIR)/lex.yy.c: $(SRCDIR)/lexico.l
 
 .PHONEY: clean
 clean:
-	@$(rm) $(OBJECTS) $(wildcard $(GENDIR)/*)
+	@$(rm) $(OBJECTS) $(OBJDIR)/expresiones.o $(OBJDIR)/lexico.o $(wildcard $(GENDIR)/*)
 	@echo "Cleanup complete!"
 
 .PHONEY: remove

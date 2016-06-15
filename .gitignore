@@ -1,6 +1,6 @@
 bin/*
-obj/*
+obj/!(.*)
 lib/*
-src/gen/*
+src/gen/!(.*)
 .DS_Store
 *.json
