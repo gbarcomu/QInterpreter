@@ -8,7 +8,7 @@
 #ifndef ERRORCONTROLLER_H_
 #define ERRORCONTROLLER_H_
 
-#include<iostream>
+#include <iostream>
 #include "Constants.h"
 #include "Printer.h"
 
