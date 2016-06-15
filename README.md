@@ -11,11 +11,11 @@ Using a command-line, go to the project folder, execute
 make
 ./QInterpreter file.q
 ```
-## Example
+## Example Bell State ZZ Measurement
 
-Bell State ZZ Measurement
+![BellStateZZMeasurement](resources/graphicExample.png)
 
-BellStateZZMeasurement.q
+###BellStateZZMeasurement.q
 
 ```c
 h q[1];
@@ -24,9 +24,7 @@ measure q[1];
 measure q[2];
 ```
 
-![BellStateZZMeasurement](resources/graphicExample.png)
-
-BellStateZZMeasurement.json
+###BellStateZZMeasurement.json
 
 ```javascript
 {
@@ -79,7 +77,7 @@ BellStateZZMeasurement.json
 
 ## Syntax
 
-```
+```c
 x q[n];
 y q[n];
 z q[n];
