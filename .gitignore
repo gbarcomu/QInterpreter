@@ -1,0 +1,4 @@
+lib/*
+build
+.DS_Store
+*.json

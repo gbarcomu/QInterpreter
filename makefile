@@ -1,6 +1,7 @@
 #fichero Makefile
 
 OBJ = expresiones.o lexico.o SymbolTable.o Printer.o ErrorController.o
+BUILDDIR = build
 
 all: QInterpreter
 
