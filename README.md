@@ -104,5 +104,6 @@ Comments with "//"
 * Positions out of bounds (bits 0-4, positions 0-39)
 * No measures
 * Two kinds of measures
+* Adding a gate in a line after a measure
 
 In that cases, the ".json" file is not generated.

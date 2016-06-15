@@ -10,11 +10,16 @@
 
 namespace constants {
 
+/********** Configurable parameters *************/
+
 const short VECTORMAXSIZE = 40;
 const short NUMBEROFBITS = 5;
 
+/***********************************************/
+
 const short NOVALUE = 0;
 
+// Type of gates
 const short TYPEX = 1;
 const short TYPEY = 2;
 const short TYPEZ = 3;
@@ -33,10 +38,18 @@ const short TYPESCXTO = 13;
 const short NOTFOUND = 14;
 
 const short OK = 15;
+
+// Errors
 const short ERROR = 16;
 const short ERROROUTOFBOUNDS = 16;
 const short ERRORNOMEASURES = 17;
 const short ERRORBLOCHANDMEASURE = 18;
+const short ERRORNOGATESAFTERMEASURES = 19;
+
+// Bit states
+const short BITSTATENOINITIALIZED = 20;
+const short BITSTATECLOSED = 21; // After a measure
+const short BITSTATEOPEN = 22;
 }
 
 #endif /* CONSTANTS_H_ */

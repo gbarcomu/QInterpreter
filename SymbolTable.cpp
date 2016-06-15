@@ -20,17 +20,13 @@ void SymbolTable::init() {
 
 	for (int i = 0; i < constants::NUMBEROFBITS; i++) {
 
-		nextPosition[i] = 0;
-		nextPosition[i] = false;
+		lastPositionTakenUp[i] = 0;
+		bitsState[i] = constants::BITSTATENOINITIALIZED;
 	}
 
-	for (int i = 0; i < constants::VECTORMAXSIZE; i++) {
+	for (int i = 0; i < constants::VECTORMAXSIZE * constants::NUMBEROFBITS; i++) {
 
-		q0[i] = constants::NOVALUE;
-		q1[i] = constants::NOVALUE;
-		q2[i] = constants::NOVALUE;
-		q3[i] = constants::NOVALUE;
-		q4[i] = constants::NOVALUE;
+		qVector[i] = constants::NOVALUE;
 	}
 }
 
@@ -40,24 +36,7 @@ short SymbolTable::getSymbolByBitPosition(short bit, short position) {
 
 	if (position >= 0 && position < constants::VECTORMAXSIZE) {
 
-		switch (bit) {
-
-		case 0:
-			response = q0[position];
-			break;
-		case 1:
-			response = q1[position];
-			break;
-		case 2:
-			response = q2[position];
-			break;
-		case 3:
-			response = q3[position];
-			break;
-		case 4:
-			response = q4[position];
-			break;
-		}
+		response = qVector[bit * constants::VECTORMAXSIZE + position];
 	}
 
 	return response;
@@ -65,38 +44,25 @@ short SymbolTable::getSymbolByBitPosition(short bit, short position) {
 
 short SymbolTable::insertSymbol(short bit, short position, short symbol) {
 
-	short response = constants::ERROROUTOFBOUNDS;
+	short response = constants::OK;
 
 	if (position >= 0 && position < constants::VECTORMAXSIZE) {
 
-		switch (bit) {
+		if (bitsState[bit] != constants::BITSTATECLOSED) {
 
-		case 0:
-			q0[position] = symbol;
-			response = constants::OK;
+			qVector[bit * constants::VECTORMAXSIZE + position] = symbol;
 			updatePositionAndInitialized(bit);
-			break;
-		case 1:
-			q1[position] = symbol;
-			response = constants::OK;
-			updatePositionAndInitialized(bit);
-			break;
-		case 2:
-			q2[position] = symbol;
-			response = constants::OK;
-			updatePositionAndInitialized(bit);
-			break;
-		case 3:
-			q3[position] = symbol;
-			response = constants::OK;
-			updatePositionAndInitialized(bit);
-			break;
-		case 4:
-			q4[position] = symbol;
-			response = constants::OK;
-			updatePositionAndInitialized(bit);
-			break;
 		}
+
+		else {
+
+			response = constants::ERRORNOGATESAFTERMEASURES;
+		}
+	}
+
+	else {
+
+		response = constants::ERROROUTOFBOUNDS;
 	}
 
 	return response;
@@ -104,19 +70,19 @@ short SymbolTable::insertSymbol(short bit, short position, short symbol) {
 
 short SymbolTable::getPositionByBit(short bit) {
 
-	return nextPosition[bit];
+	return lastPositionTakenUp[bit];
 }
 
 void SymbolTable::updatePositionAndInitialized(short bit) {
 
-	bitsInitialized[bit] = true;
-	nextPosition[bit]++;
+	bitsState[bit] = constants::BITSTATEOPEN;
+	lastPositionTakenUp[bit]++;
 
 }
 
 short SymbolTable::setPositionByBit(short bit, short newPosition) {
 
-	nextPosition[bit] = newPosition;
+	lastPositionTakenUp[bit] = newPosition;
 }
 
 SymbolTable::~SymbolTable() {
@@ -126,55 +92,36 @@ SymbolTable::~SymbolTable() {
 
 void SymbolTable::printSymbolTable() {
 
-	cout << "q0 : ";
+	for (int i = 0; i < constants::NUMBEROFBITS; i++) {
 
-	for (int i = 0; i < nextPosition[0]; i++) {
+		cout << "q" << i << " : ";
 
-		cout << whichSymbol(q0[i]) << " ";
+		printBitLine(i * constants::VECTORMAXSIZE, i * constants::VECTORMAXSIZE + lastPositionTakenUp[i]);
+
+		cout << endl;
 	}
-
-	cout << endl;
-
-	cout << "q1 : ";
-
-	for (int i = 0; i < nextPosition[1]; i++) {
-
-		cout << whichSymbol(q1[i]) << " ";
-	}
-
-	cout << endl;
-
-	cout << "q2 : ";
-
-	for (int i = 0; i < nextPosition[2]; i++) {
-
-		cout << whichSymbol(q2[i]) << " ";
-	}
-
-	cout << endl;
-
-	cout << "q3 : ";
-
-	for (int i = 0; i < nextPosition[3]; i++) {
-
-		cout << whichSymbol(q3[i]) << " ";
-	}
-
-	cout << endl;
-
-	cout << "q4 : ";
-
-	for (int i = 0; i < nextPosition[4]; i++) {
-
-		cout << whichSymbol(q4[i]) << " ";
-	}
-
-	cout << endl;
 }
 
-short SymbolTable::isBitInitialized(short bit) {
+void SymbolTable::printBitLine(int startPosition, int endPosition) {
 
-	return bitsInitialized[bit];
+	cout << "Start " << startPosition << ", end " << endPosition << endl;
+
+	for (int i = startPosition; i < endPosition; i++) {
+
+		cout << whichSymbol(qVector[i]) << " ";
+	}
+}
+
+bool SymbolTable::isBitInitialized(short bit) {
+
+	bool response = true;
+
+	if (bitsState[bit] == constants::BITSTATENOINITIALIZED) {
+
+		response = false;
+	}
+
+	return response;
 }
 
 short SymbolTable::getNumberOfGates() {
@@ -185,6 +132,11 @@ short SymbolTable::getNumberOfGates() {
 void SymbolTable::increseInOneNumberOfGates() {
 
 	numberOfGates++;
+}
+
+void SymbolTable::blockBitLine(short bit) {
+
+	bitsState[bit] = constants::BITSTATECLOSED;
 }
 
 string SymbolTable::whichSymbol(short symbol) {

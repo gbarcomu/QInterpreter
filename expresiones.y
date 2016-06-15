@@ -46,16 +46,13 @@ void equalisePositionsToTheHighest(short bitFrom, short bitTo) {
 
 void insertSymbol(short bit, short symbol) {
 	
+	symbolTable->increseInOneNumberOfGates();
 	short position = symbolTable->getPositionByBit(bit);
-	
-	if (symbolTable->insertSymbol(bit,position, symbol) == constants::ERROROUTOFBOUNDS) {
+	short response = symbolTable->insertSymbol(bit,position, symbol);
 		
-		errorController->errorCatcher(constants::ERROROUTOFBOUNDS);
-	}
-	
-	else {
+	if (response != constants::OK) {
 		
-		symbolTable->increseInOneNumberOfGates();
+		errorController->errorCatcher(response);
 	}
 }
 
@@ -63,24 +60,25 @@ void insertSymbol(short bit, short symbol) {
 void insertDoubleSymbol(short bitFrom, short bitTo) {
 	
 	equalisePositionsToTheHighest(bitFrom,bitTo);
+	symbolTable->increseInOneNumberOfGates();
 	
 	short position = symbolTable->getPositionByBit(bitFrom);
+	short response = symbolTable->insertSymbol(bitFrom,position, constants::TYPESCXFROM);
 	
-	if (symbolTable->insertSymbol(bitFrom,position, constants::TYPESCXFROM) == constants::ERROROUTOFBOUNDS) {
+	if (response != constants::OK) {
 		
-		errorController->errorCatcher(constants::ERROROUTOFBOUNDS);
-	}
-	
-	else if (symbolTable->insertSymbol(bitTo,position, constants::TYPESCXTO) == constants::ERROROUTOFBOUNDS) {
-		
-		errorController->errorCatcher(constants::ERROROUTOFBOUNDS);
+		errorController->errorCatcher(response);
 	}
 	
 	else {
 		
-		symbolTable->increseInOneNumberOfGates();
-	}
-	
+		response = symbolTable->insertSymbol(bitTo,position, constants::TYPESCXTO);
+		
+		if (response != constants::OK) {
+			
+			errorController->errorCatcher(response);
+		}
+	}		
 }
 
 %}
@@ -118,8 +116,8 @@ line: CX 'q' '[' NUMBER ']' ',' 'q' '[' NUMBER ']' ';' {insertDoubleSymbol($9, $
 	| T 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPET);}
 	| TDG 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPETDG);}
 	| SDG 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPESDG);}
-	| MEASURE 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPEMEASURE); symbolTable->setAnyMeasure(true);}
-	| BLOCH 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPEBLOCH); symbolTable->setAnyBloch(true);}
+	| MEASURE 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPEMEASURE); symbolTable->setAnyMeasure(true); symbolTable->blockBitLine($4);}
+	| BLOCH 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPEBLOCH); symbolTable->setAnyBloch(true); symbolTable->blockBitLine($4);}
 	;
 
 %%

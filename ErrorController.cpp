@@ -30,13 +30,17 @@ void ErrorController::errorCatcher(short errorCode, const char* parameter1,
 		break;
 
 	case constants::ERRORBLOCHANDMEASURE:
-		cout << "Semantic error, only one tipe of measure gate is allowed"
+		cout << "Semantic error, only one type of measure gate is allowed"
+				<< endl;
+		break;
+
+	case constants::ERRORNOGATESAFTERMEASURES:
+		cout << "Semantic error, placing any kind of gates after a measure gate is not allowed"
 				<< endl;
 		break;
 	}
 }
 
 ErrorController::~ErrorController() {
-	// TODO Auto-generated destructor stub
 }
 

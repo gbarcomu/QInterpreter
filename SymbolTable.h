@@ -21,14 +21,10 @@ class SymbolTable {
 
 private:
 
-	short q0[constants::VECTORMAXSIZE];
-	short q1[constants::VECTORMAXSIZE];
-	short q2[constants::VECTORMAXSIZE];
-	short q3[constants::VECTORMAXSIZE];
-	short q4[constants::VECTORMAXSIZE];
+	short qVector[constants::VECTORMAXSIZE * constants::NUMBEROFBITS];
 
-	short nextPosition[constants::NUMBEROFBITS];
-	bool bitsInitialized[constants::NUMBEROFBITS];
+	short lastPositionTakenUp[constants::NUMBEROFBITS];
+	short bitsState[constants::NUMBEROFBITS];
 	short numberOfGates;
 
 	bool anyMeasure;
@@ -36,6 +32,7 @@ private:
 
 	void init();
 	void printSymbolTable();
+	void printBitLine(int startPosition, int endPosition);
 	void updatePositionAndInitialized(short bit);
 
 public:
@@ -44,9 +41,20 @@ public:
 
 	short insertSymbol(short bit, short position, short symbol);
 	short getSymbolByBitPosition(short bit, short position);
+
+	void blockBitLine(short bit);
+
+	/*
+	 * Return the last position occupied in a bit line
+	 */
 	short getPositionByBit(short bit);
+
+	/*
+	 * In case of gates that uses more than one bit, it is necessary to update
+	 * the last position occupied of each bit to the highest value
+	 */
 	short setPositionByBit(short bit, short newPosition);
-	short isBitInitialized(short bit);
+	bool isBitInitialized(short bit);
 	short getNumberOfGates();
 	void increseInOneNumberOfGates();
 
