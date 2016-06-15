@@ -8,7 +8,39 @@
 #ifndef CONSTANTS_H_
 #define CONSTANTS_H_
 
-namespace constants {
+#define NOVALUE 0
+
+// Type of gates
+#define TYPEX 1
+#define TYPEY 2
+#define TYPEZ 3
+#define TYPEID 4
+#define TYPEH 5
+#define TYPES 6
+#define TYPET 7
+#define TYPETDG 8
+#define TYPESDG 9
+#define TYPEMEASURE 10
+#define TYPEBLOCH 11
+
+#define TYPESCXFROM 12
+#define TYPESCXTO 13
+
+#define NOTFOUND 14
+
+#define OK 15
+
+// Errors
+#define ERROR 16
+#define ERROROUTOFBOUNDS 17
+#define ERRORNOMEASURES 18
+#define ERRORBLOCHANDMEASURE 19
+#define ERRORNOGATESAFTERMEASURES 20
+
+// Bit states
+#define BITSTATENOINITIALIZED 21
+#define BITSTATECLOSED 22 // After a measure
+#define BITSTATEOPEN 23
 
 /********** Configurable parameters *************/
 
@@ -16,40 +48,5 @@ const short VECTORMAXSIZE = 40;
 const short NUMBEROFBITS = 5;
 
 /***********************************************/
-
-const short NOVALUE = 0;
-
-// Type of gates
-const short TYPEX = 1;
-const short TYPEY = 2;
-const short TYPEZ = 3;
-const short TYPEID = 4;
-const short TYPEH = 5;
-const short TYPES = 6;
-const short TYPET = 7;
-const short TYPETDG = 8;
-const short TYPESDG = 9;
-const short TYPEMEASURE = 10;
-const short TYPEBLOCH = 11;
-
-const short TYPESCXFROM = 12;
-const short TYPESCXTO = 13;
-
-const short NOTFOUND = 14;
-
-const short OK = 15;
-
-// Errors
-const short ERROR = 16;
-const short ERROROUTOFBOUNDS = 16;
-const short ERRORNOMEASURES = 17;
-const short ERRORBLOCHANDMEASURE = 18;
-const short ERRORNOGATESAFTERMEASURES = 19;
-
-// Bit states
-const short BITSTATENOINITIALIZED = 20;
-const short BITSTATECLOSED = 21; // After a measure
-const short BITSTATEOPEN = 22;
-}
 
 #endif /* CONSTANTS_H_ */

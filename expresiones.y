@@ -50,7 +50,7 @@ void insertSymbol(short bit, short symbol) {
 	short position = symbolTable->getPositionByBit(bit);
 	short response = symbolTable->insertSymbol(bit,position, symbol);
 		
-	if (response != constants::OK) {
+	if (response != OK) {
 		
 		errorController->errorCatcher(response);
 	}
@@ -63,18 +63,18 @@ void insertDoubleSymbol(short bitFrom, short bitTo) {
 	symbolTable->increseInOneNumberOfGates();
 	
 	short position = symbolTable->getPositionByBit(bitFrom);
-	short response = symbolTable->insertSymbol(bitFrom,position, constants::TYPESCXFROM);
+	short response = symbolTable->insertSymbol(bitFrom,position, TYPESCXFROM);
 	
-	if (response != constants::OK) {
+	if (response != OK) {
 		
 		errorController->errorCatcher(response);
 	}
 	
 	else {
 		
-		response = symbolTable->insertSymbol(bitTo,position, constants::TYPESCXTO);
+		response = symbolTable->insertSymbol(bitTo,position, TYPESCXTO);
 		
-		if (response != constants::OK) {
+		if (response != OK) {
 			
 			errorController->errorCatcher(response);
 		}
@@ -107,17 +107,17 @@ lines:
 	;
 
 line: CX 'q' '[' NUMBER ']' ',' 'q' '[' NUMBER ']' ';' {insertDoubleSymbol($9, $4);}
-	| X 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPEX);}
-	| Y 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPEY);}
-	| Z 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPEZ);}
-	| ID 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPEID);}
-	| H 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPEH);}
-	| S 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPES);}
-	| T 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPET);}
-	| TDG 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPETDG);}
-	| SDG 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPESDG);}
-	| MEASURE 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPEMEASURE); symbolTable->setAnyMeasure(true); symbolTable->blockBitLine($4);}
-	| BLOCH 'q' '[' NUMBER ']' ';' {insertSymbol($4,constants::TYPEBLOCH); symbolTable->setAnyBloch(true); symbolTable->blockBitLine($4);}
+	| X 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPEX);}
+	| Y 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPEY);}
+	| Z 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPEZ);}
+	| ID 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPEID);}
+	| H 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPEH);}
+	| S 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPES);}
+	| T 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPET);}
+	| TDG 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPETDG);}
+	| SDG 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPESDG);}
+	| MEASURE 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPEMEASURE); symbolTable->setAnyMeasure(true); symbolTable->blockBitLine($4);}
+	| BLOCH 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPEBLOCH); symbolTable->setAnyBloch(true); symbolTable->blockBitLine($4);}
 	;
 
 %%
@@ -144,12 +144,12 @@ int main(int argc,char *argv[]){
      
      if (symbolTable->isAnyMeasure() == false && symbolTable->isAnyBloch() == false) {
      
-     	errorController->errorCatcher(constants::ERRORNOMEASURES);
+     	errorController->errorCatcher(ERRORNOMEASURES);
      }
 
      else if (symbolTable->isAnyMeasure() && symbolTable->isAnyBloch()) {
      
-     	errorController->errorCatcher(constants::ERRORBLOCHANDMEASURE);
+     	errorController->errorCatcher(ERRORBLOCHANDMEASURE);
      }     
      
      printer->print();

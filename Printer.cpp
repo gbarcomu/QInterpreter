@@ -25,11 +25,11 @@ void Printer::dontGenerateFile() {
 
 void Printer::printGates(int i) {
 
-	for (int j = 0; j < constants::VECTORMAXSIZE; j++) {
+	for (int j = 0; j < VECTORMAXSIZE; j++) {
 
-		if (symbolTable->getSymbolByBitPosition(i, j) != constants::NOVALUE
+		if (symbolTable->getSymbolByBitPosition(i, j) != NOVALUE
 				&& symbolTable->getSymbolByBitPosition(i, j)
-						!= constants::TYPESCXTO) {
+						!= TYPESCXTO) {
 
 			outputFlow << "{" << endl << "\"position\":" << j << "," << endl
 					<< "\"name\": \""
@@ -47,13 +47,13 @@ void Printer::printGates(int i) {
 
 void Printer::printSpecialCaseCX(int i, int j) {
 
-	if (symbolTable->getSymbolByBitPosition(i, j) == constants::TYPESCXFROM) {
+	if (symbolTable->getSymbolByBitPosition(i, j) == TYPESCXFROM) {
 
 		outputFlow << "," << endl << "\"to\": ";
 
 		if (i > 0
 				&& symbolTable->getSymbolByBitPosition(i - 1, j)
-						== constants::TYPESCXTO) {
+						== TYPESCXTO) {
 			outputFlow << i - 1;
 		}
 
@@ -78,8 +78,8 @@ void Printer::print() {
 
 void Printer::printEndFile() {
 
-	outputFlow << "\"numberColumns\":" << constants::VECTORMAXSIZE << ","
-			<< endl << "\"numberLines\":" << constants::NUMBEROFBITS << ","
+	outputFlow << "\"numberColumns\":" << VECTORMAXSIZE << ","
+			<< endl << "\"numberLines\":" << NUMBEROFBITS << ","
 			<< endl << "\"numberGates\":" << symbolTable->getNumberOfGates()
 			<< "," << endl << "\"hasMeasures\":" << "true" << endl << "}}";
 }
@@ -94,7 +94,7 @@ void Printer::printCommaIfNotLastValue(short value1, short value2) {
 
 void Printer::printPlayground() {
 
-	for (int i = 0; i < constants::NUMBEROFBITS; i++) {
+	for (int i = 0; i < NUMBEROFBITS; i++) {
 
 		outputFlow << "{" << endl << "\"line\": " << i << "," << endl
 				<< "\"name\": \"q\"," << endl << "\"gates\": [";
@@ -103,7 +103,7 @@ void Printer::printPlayground() {
 
 		outputFlow << "]" << endl << "}";
 
-		printCommaIfNotLastValue(i, constants::NUMBEROFBITS);
+		printCommaIfNotLastValue(i, NUMBEROFBITS);
 	}
 }
 

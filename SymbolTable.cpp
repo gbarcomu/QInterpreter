@@ -18,25 +18,25 @@ void SymbolTable::init() {
 	anyBloch = false;
 	anyMeasure = false;
 
-	for (int i = 0; i < constants::NUMBEROFBITS; i++) {
+	for (int i = 0; i < NUMBEROFBITS; i++) {
 
 		lastPositionTakenUp[i] = 0;
-		bitsState[i] = constants::BITSTATENOINITIALIZED;
+		bitsState[i] = BITSTATENOINITIALIZED;
 	}
 
-	for (int i = 0; i < constants::VECTORMAXSIZE * constants::NUMBEROFBITS; i++) {
+	for (int i = 0; i < VECTORMAXSIZE * NUMBEROFBITS; i++) {
 
-		qVector[i] = constants::NOVALUE;
+		qVector[i] = NOVALUE;
 	}
 }
 
 short SymbolTable::getSymbolByBitPosition(short bit, short position) {
 
-	short response = constants::NOTFOUND;
+	short response = NOTFOUND;
 
-	if (position >= 0 && position < constants::VECTORMAXSIZE) {
+	if (position >= 0 && position < VECTORMAXSIZE) {
 
-		response = qVector[bit * constants::VECTORMAXSIZE + position];
+		response = qVector[bit * VECTORMAXSIZE + position];
 	}
 
 	return response;
@@ -44,25 +44,25 @@ short SymbolTable::getSymbolByBitPosition(short bit, short position) {
 
 short SymbolTable::insertSymbol(short bit, short position, short symbol) {
 
-	short response = constants::OK;
+	short response = OK;
 
-	if (position >= 0 && position < constants::VECTORMAXSIZE) {
+	if (position >= 0 && position < VECTORMAXSIZE) {
 
-		if (bitsState[bit] != constants::BITSTATECLOSED) {
+		if (bitsState[bit] != BITSTATECLOSED) {
 
-			qVector[bit * constants::VECTORMAXSIZE + position] = symbol;
+			qVector[bit * VECTORMAXSIZE + position] = symbol;
 			updatePositionAndInitialized(bit);
 		}
 
 		else {
 
-			response = constants::ERRORNOGATESAFTERMEASURES;
+			response = ERRORNOGATESAFTERMEASURES;
 		}
 	}
 
 	else {
 
-		response = constants::ERROROUTOFBOUNDS;
+		response = ERROROUTOFBOUNDS;
 	}
 
 	return response;
@@ -75,12 +75,12 @@ short SymbolTable::getPositionByBit(short bit) {
 
 void SymbolTable::updatePositionAndInitialized(short bit) {
 
-	bitsState[bit] = constants::BITSTATEOPEN;
+	bitsState[bit] = BITSTATEOPEN;
 	lastPositionTakenUp[bit]++;
 
 }
 
-short SymbolTable::setPositionByBit(short bit, short newPosition) {
+void SymbolTable::setPositionByBit(short bit, short newPosition) {
 
 	lastPositionTakenUp[bit] = newPosition;
 }
@@ -92,11 +92,11 @@ SymbolTable::~SymbolTable() {
 
 void SymbolTable::printSymbolTable() {
 
-	for (int i = 0; i < constants::NUMBEROFBITS; i++) {
+	for (int i = 0; i < NUMBEROFBITS; i++) {
 
 		cout << "q" << i << " : ";
 
-		printBitLine(i * constants::VECTORMAXSIZE, i * constants::VECTORMAXSIZE + lastPositionTakenUp[i]);
+		printBitLine(i * VECTORMAXSIZE, i * VECTORMAXSIZE + lastPositionTakenUp[i]);
 
 		cout << endl;
 	}
@@ -116,7 +116,7 @@ bool SymbolTable::isBitInitialized(short bit) {
 
 	bool response = true;
 
-	if (bitsState[bit] == constants::BITSTATENOINITIALIZED) {
+	if (bitsState[bit] == BITSTATENOINITIALIZED) {
 
 		response = false;
 	}
@@ -136,7 +136,7 @@ void SymbolTable::increseInOneNumberOfGates() {
 
 void SymbolTable::blockBitLine(short bit) {
 
-	bitsState[bit] = constants::BITSTATECLOSED;
+	bitsState[bit] = BITSTATECLOSED;
 }
 
 string SymbolTable::whichSymbol(short symbol) {
@@ -145,40 +145,40 @@ string SymbolTable::whichSymbol(short symbol) {
 
 	switch (symbol) {
 
-	case constants::TYPEX:
+	case TYPEX:
 		response = "x";
 		break;
-	case constants::TYPEY:
+	case TYPEY:
 		response = "y";
 		break;
-	case constants::TYPEZ:
+	case TYPEZ:
 		response = "z";
 		break;
-	case constants::TYPEID:
+	case TYPEID:
 		response = "id";
 		break;
-	case constants::TYPEH:
+	case TYPEH:
 		response = "h";
 		break;
-	case constants::TYPES:
+	case TYPES:
 		response = "s";
 		break;
-	case constants::TYPET:
+	case TYPET:
 		response = "t";
 		break;
-	case constants::TYPETDG:
+	case TYPETDG:
 		response = "tdg";
 		break;
-	case constants::TYPESDG:
+	case TYPESDG:
 		response = "sdg";
 		break;
-	case constants::TYPEMEASURE:
+	case TYPEMEASURE:
 		response = "measure";
 		break;
-	case constants::TYPEBLOCH:
+	case TYPEBLOCH:
 		response = "bloch";
 		break;
-	case constants::TYPESCXFROM:
+	case TYPESCXFROM:
 		response = "cx";
 		break;
 	}

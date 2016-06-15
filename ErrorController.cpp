@@ -19,22 +19,22 @@ void ErrorController::errorCatcher(short errorCode, const char* parameter1,
 
 	switch (errorCode) {
 
-	case constants::ERROROUTOFBOUNDS:
+	case ERROROUTOFBOUNDS:
 		cout << "Semantic error in line " << n_lineas << ", " << "position out of bounds"
 				<< endl;
 		break;
 
-	case constants::ERRORNOMEASURES:
+	case ERRORNOMEASURES:
 		cout << "Semantic error, at least one measure gate is needed"
 				<< endl;
 		break;
 
-	case constants::ERRORBLOCHANDMEASURE:
+	case ERRORBLOCHANDMEASURE:
 		cout << "Semantic error, only one type of measure gate is allowed"
 				<< endl;
 		break;
 
-	case constants::ERRORNOGATESAFTERMEASURES:
+	case ERRORNOGATESAFTERMEASURES:
 		cout << "Semantic error, placing any kind of gates after a measure gate is not allowed"
 				<< endl;
 		break;
