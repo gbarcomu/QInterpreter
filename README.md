@@ -8,17 +8,17 @@ Given a ".q" file with instructions generates a ".json" file similar to the IBM 
 
 Using the command-line, go to the project root folder and execute 
 
-```shell
+```bash
 mkdir build
 cd build
 cmake ..
 make
 ```
 
-The binary *QInterpreter* is generated under de folder *build*. You have to supply a *.q* file as the first parameter.
+The binary *QInterpreter* is generated under the *build* folder. You have to supply a *.q* file as the first parameter.
 For example, after a succesfull build, execute the next command
 
-```shell
+```bash
 ./QInterpreter ../examples/BellStateZZMeasurement.q
 ```
 
