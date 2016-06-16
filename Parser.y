@@ -1,41 +1,38 @@
 
 %{
-
+#include "Printer.h"
+#include "SymbolTable.h"
+#include "ErrorController.h"
 #include <iostream>
 #include <cmath>
 #include <stack>
 #include <list>
-#include "SymbolTable.h"
-#include "ErrorController.h"
-#include "Printer.h"
 	
 using namespace std;
      			
-extern int n_lineas;
+extern int n_lines;
 extern int yylex();
 extern FILE *yyin;
 
-
-// Store variables with its values and all the necesary information
+// Store variables with its values and all the necessary information
 SymbolTable *symbolTable;
 // Manages semantic errors
 ErrorController *errorController;
 // Create json file
 Printer *printer;
 
-
 void yyerror(const char* s){
 
-    cout << "Syntax error in line "<< n_lineas <<endl;
+    cout << "Syntax error in line "<< n_lines << endl;
     printer->dontGenerateFile();
 } 
 
-void equalisePositionsToTheHighest(short bitFrom, short bitTo) {
+void equalizePositionsToTheHighest(short bitFrom, short bitTo) {
 	
 	short positionFrom = symbolTable->getPositionByBit(bitFrom);
 	short positionTo = symbolTable->getPositionByBit(bitTo);
 	if (positionFrom > positionTo) {
-		
+
 		symbolTable->setPositionByBit(bitTo, positionFrom);
 	}
 	else {
@@ -56,10 +53,10 @@ void insertSymbol(short bit, short symbol) {
 	}
 }
 
-/* Used for CX symbol */
+// Used for CX symbol
 void insertDoubleSymbol(short bitFrom, short bitTo) {
 	
-	equalisePositionsToTheHighest(bitFrom,bitTo);
+	equalizePositionsToTheHighest(bitFrom,bitTo);
 	symbolTable->increseInOneNumberOfGates();
 	
 	short position = symbolTable->getPositionByBit(bitFrom);
@@ -88,41 +85,43 @@ void insertDoubleSymbol(short bitFrom, short bitTo) {
   short value;
 } 
 
-%start QuantumProgram /* Starting symbol */
+%start QuantumProgram // Starting symbol
 
-/* Tokens */
+// Tokens
 %token X Y Z ID H S T TDG SDG CX
 %token MEASURE BLOCH
 %token WAIT
-%token<value> NUMBER
+%token <value> NUMBER
 
 
 %%
 
-QuantumProgram: lines
+QuantumProgram
+	: lines
 	;
 
-lines: 
+lines
+	: 
 	| lines line
 	;
 
-line: CX 'q' '[' NUMBER ']' ',' 'q' '[' NUMBER ']' ';' {insertDoubleSymbol($9, $4);}
-	| X 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPEX);}
-	| Y 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPEY);}
-	| Z 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPEZ);}
-	| ID 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPEID);}
-	| H 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPEH);}
-	| S 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPES);}
-	| T 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPET);}
-	| TDG 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPETDG);}
-	| SDG 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPESDG);}
-	| MEASURE 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPEMEASURE); symbolTable->setAnyMeasure(true); symbolTable->blockBitLine($4);}
-	| BLOCH 'q' '[' NUMBER ']' ';' {insertSymbol($4,TYPEBLOCH); symbolTable->setAnyBloch(true); symbolTable->blockBitLine($4);}
+line: CX 		'q' '[' NUMBER ']' ',' 'q' '[' NUMBER ']' ';' { insertDoubleSymbol($9, $4); }
+	| X 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPEX); }
+	| Y 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPEY); }
+	| Z 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPEZ); }
+	| ID 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPEID); }
+	| H 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPEH); }
+	| S 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPES); }
+	| T 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPET); }
+	| TDG 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPETDG); }
+	| SDG 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPESDG); }
+	| MEASURE 	'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPEMEASURE); symbolTable->setAnyMeasure(true); symbolTable->blockBitLine($4); }
+	| BLOCH 	'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPEBLOCH); symbolTable->setAnyBloch(true); symbolTable->blockBitLine($4); }
 	;
 
 %%
 
-/* Is necessary to introduce a file route as a parameter with .q extension*/
+// It's necessary to introduce a file route as a parameter with .q extension
 int main(int argc,char *argv[]){
     
 	if (argv[1] == NULL) {
@@ -131,7 +130,7 @@ int main(int argc,char *argv[]){
 		return 0;
 	}
 	
-     n_lineas = 0;
+     n_lines = 0;
      
      symbolTable = new SymbolTable();
      printer = new Printer(symbolTable, argv[1]);

@@ -20,7 +20,7 @@ void ErrorController::errorCatcher(short errorCode, const char* parameter1,
 	switch (errorCode) {
 
 	case ERROROUTOFBOUNDS:
-		cout << "Semantic error in line " << n_lineas << ", " << "position out of bounds"
+		cout << "Semantic error in line " << n_lines << ", " << "position out of bounds"
 				<< endl;
 		break;
 

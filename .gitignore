@@ -1,4 +1,5 @@
 build
 lib
 examples/*.json
+.idea
 .DS_Store

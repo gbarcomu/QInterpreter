@@ -1,17 +1,19 @@
 %{
 #include "Parser.h"
 #include <math.h>
-int n_lineas;
+int n_lines;
 %}
 
 %option noyywrap
 
 %x COM
 
+DIGIT [0-9]
+
 %%
 
 "//"					BEGIN(COM);
-<COM>"\n"				BEGIN(0); n_lineas++;
+<COM>"\n"				BEGIN(0); n_lines++;
 
 <COM>.					;
 
@@ -30,8 +32,12 @@ int n_lineas;
 
 "wait"					return WAIT;
 
-\n					    n_lineas++;
-[0-9]+					yylval.value = atoi(yytext);return NUMBER;
-[\t ]					;	
+\n					    n_lines++;
+
+{DIGIT}+				yylval.value = atoi(yytext); return NUMBER;
+
+[\t\r ]					;	
+
 . 						return (yytext[0]);
+
 %%
