@@ -1,6 +1,4 @@
-bin/*
-obj/!(.*)
-lib/*
-src/gen/!(.*)
+build
+lib
+examples/*.json
 .DS_Store
-*.json

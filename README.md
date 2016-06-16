@@ -6,11 +6,22 @@ Given a ".q" file with instructions generates a ".json" file similar to the IBM 
 
 ## Start Up
 
-Using a command-line, go to the project folder, execute 
-```
+Using the command-line, go to the project root folder and execute 
+
+```shell
+mkdir build
+cd build
+cmake ..
 make
-./QInterpreter file.q
 ```
+
+The binary *QInterpreter* is generated under de folder *build*. You have to supply a *.q* file as the first parameter.
+For example, after a succesfull build, execute the next command
+
+```shell
+./QInterpreter ../examples/BellStateZZMeasurement.q
+```
+
 ## Example Bell State ZZ Measurement
 
 ![BellStateZZMeasurement](resources/graphicExample.png)
