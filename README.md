@@ -4,9 +4,15 @@ This Interpreter is based on [IBM Quantum Experience Processor](https://quantume
 
 Given a ".q" file with instructions generates a ".json" file similar to the IBM API response.
 
-## Start Up
+## Install dependencies
 
-Using the command-line, go to the project root folder and execute 
+```bash
+sudo apt-get install --assume-yes libcurl4-openssl-dev
+```
+
+## Build the project
+
+Using the command-line, go to the project root folder and execute the next commands:
 
 ```bash
 mkdir build
@@ -16,7 +22,7 @@ make
 ```
 
 The binary *QInterpreter* is generated under the *build* folder. You have to supply a *.q* file as the first parameter.
-For example, after a succesfull build, execute the next command
+For example, after a succesfull build, execute the next command:
 
 ```bash
 ./QInterpreter ../examples/BellStateZZMeasurement.q
@@ -26,7 +32,7 @@ For example, after a succesfull build, execute the next command
 
 ![BellStateZZMeasurement](resources/graphicExample.png)
 
-###BellStateZZMeasurement.q
+### (Input) BellStateZZMeasurement.q
 
 ```c
 h q[1];
@@ -35,7 +41,7 @@ measure q[1];
 measure q[2];
 ```
 
-###BellStateZZMeasurement.json
+### (Output) BellStateZZMeasurement.json
 
 ```javascript
 {
@@ -103,7 +109,7 @@ measure q[n];
 bloch q[n];
 ```
 
-So that m, n between 0-4.
+Such that m, n between 0-4.
 
 Comments with "//"
 
