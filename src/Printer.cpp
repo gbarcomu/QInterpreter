@@ -31,7 +31,7 @@ void Printer::printGates(int i) {
 				&& symbolTable->getSymbolByBitPosition(i, j)
 						!= TYPESCXTO) {
 
-			outputFlow << "{" << endl << "\"position\":" << j << "," << endl
+			outputFlow << "{"  << "\"position\":" << j << ","
 					<< "\"name\": \""
 					<< symbolTable->whichSymbol(
 							(symbolTable->getSymbolByBitPosition(i, j)))
@@ -39,8 +39,11 @@ void Printer::printGates(int i) {
 
 			printSpecialCaseCX(i,j);
 
-			outputFlow << endl << "}" << endl;
-			printCommaIfNotLastValue(j, symbolTable->getPositionByBit(i));
+			outputFlow << "}" ;
+			if (printCommaIfNotLastValue(j, symbolTable->getPositionByBit(i))) {
+
+				printCommaIfGateClosed(i);
+			}
 		}
 	}
 }
@@ -49,7 +52,7 @@ void Printer::printSpecialCaseCX(int i, int j) {
 
 	if (symbolTable->getSymbolByBitPosition(i, j) == TYPESCXFROM) {
 
-		outputFlow << "," << endl << "\"to\": ";
+		outputFlow << "," << "\"to\": ";
 
 		if (i > 0
 				&& symbolTable->getSymbolByBitPosition(i - 1, j)
@@ -66,12 +69,12 @@ void Printer::printSpecialCaseCX(int i, int j) {
 
 void Printer::print() {
 
-	outputFlow << "{" << endl << "\"jsonQasm\": {" << endl
-			<< "\"playground\": [" << endl;
+	outputFlow << "{" << "\"jsonQasm\": {"
+			<< "\"playground\": [";
 
 	printPlayground();
 
-	outputFlow << "]," << endl;
+	outputFlow << "],";
 
 	printEndFile();
 }
@@ -79,14 +82,27 @@ void Printer::print() {
 void Printer::printEndFile() {
 
 	outputFlow << "\"numberColumns\":" << VECTORMAXSIZE << ","
-			<< endl << "\"numberLines\":" << NUMBEROFBITS << ","
-			<< endl << "\"numberGates\":" << symbolTable->getNumberOfGates()
-			<< "," << endl << "\"hasMeasures\":" << "true" << endl << "}}";
+			 << "\"numberLines\":" << NUMBEROFBITS << ","
+			 << "\"numberGates\":" << symbolTable->getNumberOfGates()
+			<< "," << "\"hasMeasures\":" << "true,"
+			<< "\"topology\":\"250e969c6b9e68aa2a045ffbceb3ac33\""
+			<< "}}";
 }
 
-void Printer::printCommaIfNotLastValue(short value1, short value2) {
+bool Printer::printCommaIfNotLastValue(short value1, short value2) {
 
 	if (value1 != (value2 - 1)) {
+
+		outputFlow << ",";
+		return false;
+	}
+
+	return true;
+}
+
+void Printer::printCommaIfGateClosed(short bit) {
+
+	if (symbolTable->getBitState(bit) == BITSTATECLOSED) {
 
 		outputFlow << ",";
 	}
@@ -96,14 +112,28 @@ void Printer::printPlayground() {
 
 	for (int i = 0; i < NUMBEROFBITS; i++) {
 
-		outputFlow << "{" << endl << "\"line\": " << i << "," << endl
-				<< "\"name\": \"q\"," << endl << "\"gates\": [";
+		outputFlow << "{" << "\"line\": " << i << ","
+				<< "\"name\": \"q\"," << "\"gates\": [";
 
 		printGates(i);
+		printFillWithEmptyDoors(i);
 
-		outputFlow << "]" << endl << "}";
+		outputFlow << "]" << "}";
 
 		printCommaIfNotLastValue(i, NUMBEROFBITS);
+	}
+}
+
+void Printer::printFillWithEmptyDoors(int i) {
+
+	if (symbolTable->getBitState(i) == BITSTATECLOSED) {
+
+		for (int j = symbolTable->getPositionByBit(i); j < VECTORMAXSIZE; j++) {
+
+			outputFlow << "{ \"position\":" << j << "}";
+			symbolTable->increseInOneNumberOfGates();
+			printCommaIfNotLastValue(j, VECTORMAXSIZE);
+		}
 	}
 }
 
@@ -114,10 +144,19 @@ Printer::~Printer() {
 
 		if (remove(nameFile.c_str()) != 0) {
 
-			cout << "Error deleting file" << endl;
+			cout << "Error deleting file";
 		} else {
 
-			cout << "File deleted" << endl;
+			cout << "File deleted";
 		}
+	}
+
+	else {
+
+		QuantumAPIService *quantumAPIService = new QuantumAPIService(nameFile);
+
+		quantumAPIService->sendJsonFileToTheAPI();
+
+		delete quantumAPIService;
 	}
 }

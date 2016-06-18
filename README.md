@@ -83,7 +83,8 @@ measure q[2];
         "numberColumns": 40,
         "numberLines": 5,
         "numberGates": 4,
-        "hasMeasures": true
+        "hasMeasures": true,
+        "topology": "250e969c6b9e68aa2a045ffbceb3ac33"
     }
 }
 ```

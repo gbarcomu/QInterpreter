@@ -12,6 +12,7 @@
 #include <fstream>
 #include <sstream>
 #include "SymbolTable.h"
+#include "QuantumAPIService.h"
 
 class Printer {
 
@@ -26,8 +27,10 @@ private:
 	void printGates(int i);
 	void printPlayground();
 	void printEndFile();
-	void printCommaIfNotLastValue(short value1, short value2);
+	bool printCommaIfNotLastValue(short value1, short value2);
+	void printCommaIfGateClosed(short bit);
 	void printSpecialCaseCX(int i, int j);
+	void printFillWithEmptyDoors(int i);
 
 public:
 	Printer(SymbolTable *_symbolTable, string outputName);

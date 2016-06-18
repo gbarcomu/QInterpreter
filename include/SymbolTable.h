@@ -13,7 +13,6 @@
 #include <iomanip>
 #include <cstring>
 #include <sstream>
-#include <unordered_map>
 #include "Constants.h"
 using namespace std;
 
@@ -77,6 +76,10 @@ public:
 
 	void setAnyMeasure(bool _anyMeasure) {
 		anyMeasure = _anyMeasure;
+	}
+
+	short getBitState(int bit) const {
+		return bitsState[bit];
 	}
 };
 
