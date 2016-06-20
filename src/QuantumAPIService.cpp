@@ -9,6 +9,8 @@
 
 QuantumAPIService::QuantumAPIService(string inputName) {
 
+	fileName = inputName;
+
 	inputFlow.open(inputName);
 	getline(inputFlow,json);
 	jsonExperimentNameParse();
@@ -54,8 +56,10 @@ void QuantumAPIService::sendJsonFileToTheAPI() {
 
 	string responseJSON = query(a,b,c);
 
+	fileName = fileName.substr(0, fileName.length() - 5) + "Result.json";
+
 	ofstream outputFlow;
-	outputFlow.open("../examples/response.json");
+	outputFlow.open(fileName);
 	outputFlow << responseJSON;
 	outputFlow.close();
 }
@@ -72,7 +76,7 @@ string QuantumAPIService::getCodeID(string userID, string accessToken){
 
 string QuantumAPIService::query(string userID, string accessToken, string codeID){
 	stringstream urlReq;
-	urlReq << "https://quantumexperience.ng.bluemix.net/api/users/" << userID  << "/codes/" << codeID << "/executions?deviceRunType=sim_trivial&fromCache=true";
+	urlReq << "https://quantumexperience.ng.bluemix.net/api/users/" << userID  << "/codes/" << codeID << "/executions?deviceRunType=sim_realistic&fromCache=false";
 	stringstream token;
 	token << "X-Access-Token: " << accessToken;
 	std::string response_string = doPost(urlReq.str().c_str(), json.c_str(), token.str().c_str());

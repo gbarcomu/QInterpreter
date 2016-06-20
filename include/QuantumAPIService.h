@@ -19,6 +19,8 @@ class QuantumAPIService {
 
 private:
 
+	string fileName;
+
 	string json;
 	/*JSON file with the name of the experiment used for get the code ID*/
 	string jsonExperimentName;
