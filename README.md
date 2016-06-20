@@ -93,6 +93,8 @@ measure q[2];
 
 ![Architecture](resources/architecture.png)
 
+![Quantum API Service](resources/quantumapiservice.png)
+
 ## Syntax
 
 ```c
