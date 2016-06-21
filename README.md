@@ -101,60 +101,17 @@ measure q[2];
 
 ### (Output) BellStateZZMeasurementResult.json
 
-```javascript
+```
 {
-    "execution": {
-        "result": {
-            "date": "2016-05-03T07:57:38.376Z",
-            "data": {
-                "p": {
-                    "qubits": [1, 2],
-                    "labels": ["00", "01", "10", "11"],
-                    "values": [0.46578058604498057, 0.010055914979718002, 0.036575746838289756, 0.48758775213701194]
-                },
-                "t": 390,
-                "qasm": "qreg q,5; gate h, [[0.7071067811865476,0.7071067811865476],[0.7071067811865476,-0.7071067811865476]];
-			gate measure, [[1,0],[0,0.7071067811865476+0.7071067811865476i]];gate cx, [[1,0,0,0],[0,1,0,0],[0,0,0,1],[0,0,1,0]]; h q[1];cx q[1], q[2];measure q[1];measure q[2];",
-                "serialNumberDevice": "chip_simulator_docker_716435e",
-                "time": 3.9117038249969482
-            }
-        },
-        "startDate": "2016-06-20T16:39:53.183Z",
-        "modificationDate": 1466440793183,
-        "endDate": "2016-06-20T16:39:53.295Z",
-        "status": {
-            "id": "DONE"
-        },
-        "deviceRunType": "sim_realistic",
-        "ip": {
-            "ip": "158.49.245.140",
-            "country": "Spain",
-            "continent": "Europe"
-        },
-        "deleted": false,
-        "userDeleted": false,
-        "id": "3f789ee0ad59bed2589afe418fb56d0f",
-        "codeId": "d53e7aab74ef2b3e99864cf4e9e1a017",
-        "deviceId": "ff2dcd0fbc05000ba9ba9b45090176d1",
-        "userId": "6d7711a003147c9d93bb40f4cb4e0ac4",
-        "code": {
-            "type": "Algorithm",
-            "active": true,
-            "versionId": 1,
-            "idCode": "6c84a6657d54d9669cf4a04fd4aec356",
-            "name": "autoExperiment",
-            "jsonQASM": .....
-            
-            "qasm": "h q[1];\ncx q[1], q[2];\nmeasure q[1];\nmeasure q[2];\n",
-            "creationDate": "2016-06-20T16:39:50.854Z",
-            "deleted": false,
-            "orderDate": 1466440792815,
-            "userDeleted": false,
-            "id": "d53e7aab74ef2b3e99864cf4e9e1a017",
-            "userId": "6d7711a003147c9d93bb40f4cb4e0ac4"
-        }
-    }
-}
+  "execution": {
+    "result": {
+      "date": "2016-05-03T07:57:38.376Z",
+        "data": {
+          "p": {
+           "qubits": [1, 2],
+           "labels": ["00", "01", "10", "11"],
+           "values": [0.46578058604498057, 0.010055914979718002, 0.036575746838289756, 0.48758775213701194]
+           ...
 ```
 
 ## Architecture
