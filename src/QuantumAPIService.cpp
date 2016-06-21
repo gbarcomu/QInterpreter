@@ -52,7 +52,7 @@ void QuantumAPIService::sendJsonFileToTheAPI() {
 
 	c = getCodeID(a,b);
 
-	cout << a << " " << b << " " << c << endl;
+//	cout << a << " " << b << " " << c << endl;
 
 	string responseJSON = query(a,b,c);
 
@@ -62,6 +62,8 @@ void QuantumAPIService::sendJsonFileToTheAPI() {
 	outputFlow.open(fileName);
 	outputFlow << responseJSON;
 	outputFlow.close();
+
+	cout << "Success" << endl;
 }
 
 string QuantumAPIService::getCodeID(string userID, string accessToken){

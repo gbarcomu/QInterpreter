@@ -1,0 +1,14 @@
+h q[1];
+h q[2];
+h q[3];
+t q[2];
+h q[2];
+h q[2];
+cx q[1], q[2];
+h q[1];
+cx q[3], q[2];
+measure q[1];
+h q[2];
+h q[3];
+measure q[2];
+measure q[3];

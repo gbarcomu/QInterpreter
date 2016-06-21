@@ -87,7 +87,7 @@ void SymbolTable::setPositionByBit(short bit, short newPosition) {
 
 SymbolTable::~SymbolTable() {
 
-	printSymbolTable();
+//	printSymbolTable();
 }
 
 void SymbolTable::printSymbolTable() {

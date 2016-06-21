@@ -15,7 +15,7 @@ Printer::Printer(SymbolTable *_symbolTable, string outputName) {
 	symbolTable = _symbolTable;
 	printFile = true;
 
-	cout << "Creating " << nameFile << " file" << endl;
+//	cout << "Creating " << nameFile << " file" << endl;
 }
 
 void Printer::dontGenerateFile() {
@@ -28,18 +28,16 @@ void Printer::printGates(int i) {
 	for (int j = 0; j < VECTORMAXSIZE; j++) {
 
 		if (symbolTable->getSymbolByBitPosition(i, j) != NOVALUE
-				&& symbolTable->getSymbolByBitPosition(i, j)
-						!= TYPESCXTO) {
+				&& symbolTable->getSymbolByBitPosition(i, j) != TYPESCXTO) {
 
-			outputFlow << "{"  << "\"position\":" << j << ","
-					<< "\"name\": \""
+			outputFlow << "{" << "\"position\":" << j << "," << "\"name\": \""
 					<< symbolTable->whichSymbol(
 							(symbolTable->getSymbolByBitPosition(i, j)))
 					<< "\"";
 
-			printSpecialCaseCX(i,j);
+			printSpecialCaseCX(i, j);
 
-			outputFlow << "}" ;
+			outputFlow << "}";
 			if (printCommaIfNotLastValue(j, symbolTable->getPositionByBit(i))) {
 
 				printCommaIfGateClosed(i);
@@ -54,23 +52,19 @@ void Printer::printSpecialCaseCX(int i, int j) {
 
 		outputFlow << "," << "\"to\": ";
 
-		if (i > 0
-				&& symbolTable->getSymbolByBitPosition(i - 1, j)
-						== TYPESCXTO) {
-			outputFlow << i - 1;
-		}
+		for (int k = 0; k < NUMBEROFBITS; k++) {
 
-		else {
-
-			outputFlow << i + 1;
+			if (i > 0 && symbolTable->getSymbolByBitPosition(k, j)
+			== TYPESCXTO) {
+				outputFlow << k;
+			}
 		}
 	}
 }
 
 void Printer::print() {
 
-	outputFlow << "{" << "\"jsonQasm\": {"
-			<< "\"playground\": [";
+	outputFlow << "{" << "\"jsonQasm\": {" << "\"playground\": [";
 
 	printPlayground();
 
@@ -82,10 +76,9 @@ void Printer::print() {
 void Printer::printEndFile() {
 
 	outputFlow << "\"numberColumns\":" << VECTORMAXSIZE << ","
-			 << "\"numberLines\":" << NUMBEROFBITS << ","
-			 << "\"numberGates\":" << symbolTable->getNumberOfGates()
-			<< "," << "\"hasMeasures\":" << "true,"
-			<< "\"topology\":\"250e969c6b9e68aa2a045ffbceb3ac33\""
+			<< "\"numberLines\":" << NUMBEROFBITS << "," << "\"numberGates\":"
+			<< symbolTable->getNumberOfGates() << "," << "\"hasMeasures\":"
+			<< "true," << "\"topology\":\"250e969c6b9e68aa2a045ffbceb3ac33\""
 			<< "}}";
 }
 
@@ -112,8 +105,8 @@ void Printer::printPlayground() {
 
 	for (int i = 0; i < NUMBEROFBITS; i++) {
 
-		outputFlow << "{" << "\"line\": " << i << ","
-				<< "\"name\": \"q\"," << "\"gates\": [";
+		outputFlow << "{" << "\"line\": " << i << "," << "\"name\": \"q\","
+				<< "\"gates\": [";
 
 		printGates(i);
 		printFillWithEmptyDoors(i);
