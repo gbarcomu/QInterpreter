@@ -138,10 +138,7 @@ Printer::~Printer() {
 		if (remove(nameFile.c_str()) != 0) {
 
 			cout << "Error deleting file";
-		} else {
-
-			cout << "File deleted";
-		}
+		} 
 	}
 
 	else {
