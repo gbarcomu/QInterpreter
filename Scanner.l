@@ -1,5 +1,6 @@
 %{
 #include "Parser.h"
+#include "Constants.h"
 #include <math.h>
 int n_lines;
 %}
@@ -17,20 +18,18 @@ DIGIT [0-9]
 
 <COM>.					;
 
-"x"						return X;
-"y"						return Y;
-"z"						return Z;
-"id"					return ID;
-"h"						return H;
-"s"						return S;
-"t"						return T;
-"tdg"					return TDG;
-"sdg"					return SDG;
+"x"						yylval.value = TYPEX; return X;
+"y"						yylval.value = TYPEY; return Y;
+"z"						yylval.value = TYPEZ; return Z;
+"id"					yylval.value = TYPEID;return ID;
+"h"						yylval.value = TYPEH; return H;
+"s"						yylval.value = TYPES; return S;
+"t"						yylval.value = TYPET; return T;
+"tdg"					yylval.value = TYPETDG; return TDG;
+"sdg"					yylval.value = TYPESDG; return SDG;
 "cx"					return CX;
-"measure"				return MEASURE;
-"bloch"					return BLOCH;
-
-"wait"					return WAIT;
+"measure"				yylval.value = TYPEMEASURE; return MEASURE;
+"bloch"					yylval.value = TYPEBLOCH; return BLOCH;
 
 \n					    n_lines++;
 

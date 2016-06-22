@@ -141,12 +141,12 @@ Printer::~Printer() {
 		} 
 	}
 
-	else {
-
-		QuantumAPIService *quantumAPIService = new QuantumAPIService(nameFile);
-
-		quantumAPIService->sendJsonFileToTheAPI();
-
-		delete quantumAPIService;
-	}
+//	else {
+//
+//		QuantumAPIService *quantumAPIService = new QuantumAPIService(nameFile);
+//
+//		quantumAPIService->sendJsonFileToTheAPI();
+//
+//		delete quantumAPIService;
+//	}
 }

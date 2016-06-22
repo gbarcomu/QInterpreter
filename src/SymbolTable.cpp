@@ -22,6 +22,7 @@ void SymbolTable::init() {
 
 		lastPositionTakenUp[i] = 0;
 		bitsState[i] = BITSTATENOINITIALIZED;
+		bitsSelected[i] = false;
 	}
 
 	for (int i = 0; i < VECTORMAXSIZE * NUMBEROFBITS; i++) {
@@ -184,4 +185,12 @@ string SymbolTable::whichSymbol(short symbol) {
 	}
 
 	return response;
+}
+
+void SymbolTable::cleanBitSelected() {
+
+	for (int i = 0; i < NUMBEROFBITS; i++) {
+
+		bitsSelected[i] = false;
+	}
 }

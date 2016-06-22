@@ -24,6 +24,9 @@ private:
 
 	short lastPositionTakenUp[NUMBEROFBITS];
 	short bitsState[NUMBEROFBITS];
+
+	bool bitsSelected[NUMBEROFBITS];
+
 	short numberOfGates;
 
 	bool anyMeasure;
@@ -42,6 +45,8 @@ public:
 	short getSymbolByBitPosition(short bit, short position);
 
 	void blockBitLine(short bit);
+
+	void cleanBitSelected();
 
 	/*
 	 * Return the last position occupied in a bit line
@@ -80,6 +85,14 @@ public:
 
 	short getBitState(int bit) const {
 		return bitsState[bit];
+	}
+
+	bool getBitSelected(int bit) const {
+		return bitsSelected[bit];
+	}
+
+	short setBitSelected(int bit) {
+		bitsSelected[bit] = true;;
 	}
 };
 

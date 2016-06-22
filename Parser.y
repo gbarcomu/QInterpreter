@@ -53,6 +53,28 @@ void insertSymbol(short bit, short symbol) {
 	}
 }
 
+void insertMultipleSymbols(short symbol) {
+	
+	for (int i = 0; i < NUMBEROFBITS; i++) {
+		
+		if (symbolTable->getBitSelected(i)) {
+			
+			insertSymbol(i,symbol);
+		}
+	}	
+}
+
+void blockMultipleBitLane() {
+	
+	for (int i = 0; i < NUMBEROFBITS; i++) {
+		
+		if (symbolTable->getBitSelected(i)) {
+			
+			symbolTable->blockBitLine(i);
+		}
+	}	
+}
+
 // Used for CX symbol
 void insertDoubleSymbol(short bitFrom, short bitTo) {
 	
@@ -88,11 +110,11 @@ void insertDoubleSymbol(short bitFrom, short bitTo) {
 %start QuantumProgram // Starting symbol
 
 // Tokens
-%token X Y Z ID H S T TDG SDG CX
-%token MEASURE BLOCH
-%token WAIT
+%token CX
+%token <value> Y Z ID S T TDG SDG X H
+%token <value> MEASURE BLOCH
 %token <value> NUMBER
-
+%type <value> typeOfGate
 
 %%
 
@@ -105,18 +127,25 @@ lines
 	| lines line
 	;
 
-line: CX 		'q' '[' NUMBER ']' ',' 'q' '[' NUMBER ']' ';' { insertDoubleSymbol($9, $4); }
-	| X 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPEX); }
-	| Y 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPEY); }
-	| Z 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPEZ); }
-	| ID 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPEID); }
-	| H 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPEH); }
-	| S 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPES); }
-	| T 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPET); }
-	| TDG 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPETDG); }
-	| SDG 		'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPESDG); }
-	| MEASURE 	'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPEMEASURE); symbolTable->setAnyMeasure(true); symbolTable->blockBitLine($4); }
-	| BLOCH 	'q' '[' NUMBER ']' ';' { insertSymbol($4,TYPEBLOCH); symbolTable->setAnyBloch(true); symbolTable->blockBitLine($4); }
+line: CX 				'q' '[' NUMBER ']' ',' 'q' '[' NUMBER ']' ';' { insertDoubleSymbol($9, $4); }
+	| typeOfGate 		'q' '[' multiple ']' ';' { insertMultipleSymbols($1); symbolTable->cleanBitSelected();}
+	| MEASURE 	    	'q' '[' multiple ']' ';' { insertMultipleSymbols($1); symbolTable->setAnyMeasure(true); blockMultipleBitLane(); symbolTable->cleanBitSelected();}
+	| BLOCH   		 	'q' '[' multiple ']' ';' { insertMultipleSymbols($1); symbolTable->setAnyBloch(true); blockMultipleBitLane(); symbolTable->cleanBitSelected();}
+	;
+
+typeOfGate: X {$$ = $1;}		
+	| Y 	  {$$ = $1;}		
+	| Z       {$$ = $1;}		
+	| ID 	  {$$ = $1;}		
+	| H 	  {$$ = $1;}	
+	| S       {$$ = $1;}		
+	| T 	  {$$ = $1;}	
+	| TDG 	  {$$ = $1;}	
+	| SDG 	  {$$ = $1;}	
+	;
+	
+multiple: NUMBER 			{ symbolTable->setBitSelected($1); }
+	| multiple ',' NUMBER	{ symbolTable->setBitSelected($3); }
 	;
 
 %%
