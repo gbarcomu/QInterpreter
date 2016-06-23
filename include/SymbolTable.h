@@ -54,6 +54,11 @@ public:
 	short getPositionByBit(short bit);
 
 	/*
+	 * Return the last position occupied in a bit line excluding TYPESCXTO
+	 */
+	short getPositionByBitExcludingCXTO(short bit);
+
+	/*
 	 * In case of gates that uses more than one bit, it is necessary to update
 	 * the last position occupied of each bit to the highest value
 	 */

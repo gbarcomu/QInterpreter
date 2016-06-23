@@ -5,7 +5,6 @@
 #include "ErrorController.h"
 #include <iostream>
 #include <cmath>
-#include <stack>
 #include <list>
 	
 using namespace std;
@@ -20,6 +19,12 @@ SymbolTable *symbolTable;
 ErrorController *errorController;
 // Create json file
 Printer *printer;
+
+/*CX case have two values, the solution is keep these values in the list as - (firstValue*10 + secondValue) to be distinguished of the others */
+list <short> loopInstructions;
+
+bool inLoop;
+short loopTimes;
 
 void yyerror(const char* s){
 
@@ -100,6 +105,41 @@ void insertDoubleSymbol(short bitFrom, short bitTo) {
 	}		
 }
 
+void doLoop() {
+	
+	for (int i = 0; i < loopTimes; i++) { 
+		
+		for (std::list <short>::iterator it=loopInstructions.begin(); it != loopInstructions.end(); ++it) {
+			
+			short _short = (short)*it; 
+
+			// CX case
+			if (_short < 0) {
+				
+				_short = -_short;
+				
+				insertDoubleSymbol(_short/10,_short%10);
+			}
+			
+			else {
+				
+				insertMultipleSymbols(_short);
+
+			}
+		}	
+}
+	
+	symbolTable->cleanBitSelected();
+	inLoop = false;
+	loopTimes = 1;
+	loopInstructions.clear();
+}
+
+void storeInstruction(short instruction) {
+	
+	loopInstructions.push_back(instruction);
+}
+
 %}
 
 %union{
@@ -110,7 +150,7 @@ void insertDoubleSymbol(short bitFrom, short bitTo) {
 %start QuantumProgram // Starting symbol
 
 // Tokens
-%token CX
+%token CX REPEAT
 %token <value> Y Z ID S T TDG SDG X H
 %token <value> MEASURE BLOCH
 %token <value> NUMBER
@@ -122,15 +162,18 @@ QuantumProgram
 	: lines
 	;
 
+
+
 lines
 	: 
 	| lines line
 	;
 
-line: CX 				'q' '[' NUMBER ']' ',' 'q' '[' NUMBER ']' ';' { insertDoubleSymbol($9, $4); }
-	| typeOfGate 		'q' '[' multiple ']' ';' { insertMultipleSymbols($1); symbolTable->cleanBitSelected();}
+line: CX 				'q' '[' NUMBER ']' ',' 'q' '[' NUMBER ']' ';' { if (inLoop) {storeInstruction(-($9*10+$4));} else {insertDoubleSymbol($9, $4);} }
+	| typeOfGate 		'q' '[' multiple ']' ';' { if (inLoop) {storeInstruction($1);} else {insertMultipleSymbols($1); symbolTable->cleanBitSelected();}}
 	| MEASURE 	    	'q' '[' multiple ']' ';' { insertMultipleSymbols($1); symbolTable->setAnyMeasure(true); blockMultipleBitLane(); symbolTable->cleanBitSelected();}
 	| BLOCH   		 	'q' '[' multiple ']' ';' { insertMultipleSymbols($1); symbolTable->setAnyBloch(true); blockMultipleBitLane(); symbolTable->cleanBitSelected();}
+	| loop
 	;
 
 typeOfGate: X {$$ = $1;}		
@@ -147,6 +190,16 @@ typeOfGate: X {$$ = $1;}
 multiple: NUMBER 			{ symbolTable->setBitSelected($1); }
 	| multiple ',' NUMBER	{ symbolTable->setBitSelected($3); }
 	;
+	
+loop: _repeat times '{' lines '}' { doLoop(); }
+	;
+
+_repeat: REPEAT				{ inLoop = true; }
+	;
+
+
+times: NUMBER {loopTimes = $1;}
+	;
 
 %%
 
@@ -160,6 +213,8 @@ int main(int argc,char *argv[]){
 	}
 	
      n_lines = 0;
+     inLoop = false;
+     loopTimes = 1;
      
      symbolTable = new SymbolTable();
      printer = new Printer(symbolTable, argv[1]);

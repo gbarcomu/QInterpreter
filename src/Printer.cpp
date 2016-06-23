@@ -38,7 +38,8 @@ void Printer::printGates(int i) {
 			printSpecialCaseCX(i, j);
 
 			outputFlow << "}";
-			if (printCommaIfNotLastValue(j, symbolTable->getPositionByBit(i))) {
+
+			if (printCommaIfNotLastValue(j, symbolTable->getPositionByBitExcludingCXTO(i) + 1)) {
 
 				printCommaIfGateClosed(i);
 			}
@@ -141,12 +142,12 @@ Printer::~Printer() {
 		} 
 	}
 
-//	else {
-//
-//		QuantumAPIService *quantumAPIService = new QuantumAPIService(nameFile);
-//
-//		quantumAPIService->sendJsonFileToTheAPI();
-//
-//		delete quantumAPIService;
-//	}
+	else {
+
+		QuantumAPIService *quantumAPIService = new QuantumAPIService(nameFile);
+
+		quantumAPIService->sendJsonFileToTheAPI();
+
+		delete quantumAPIService;
+	}
 }

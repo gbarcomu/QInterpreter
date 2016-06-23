@@ -74,6 +74,8 @@ short SymbolTable::getPositionByBit(short bit) {
 	return lastPositionTakenUp[bit];
 }
 
+
+
 void SymbolTable::updatePositionAndInitialized(short bit) {
 
 	bitsState[bit] = BITSTATEOPEN;
@@ -138,6 +140,21 @@ void SymbolTable::increseInOneNumberOfGates() {
 void SymbolTable::blockBitLine(short bit) {
 
 	bitsState[bit] = BITSTATECLOSED;
+}
+
+short SymbolTable::getPositionByBitExcludingCXTO(short bit) {
+
+	short lastPosition = 0;
+
+	for (int i = 0; i < VECTORMAXSIZE; i++) {
+
+		if (getSymbolByBitPosition(bit,i) != NOVALUE && getSymbolByBitPosition(bit,i) != TYPESCXTO) {
+
+			lastPosition = i;
+		}
+	}
+
+	return lastPosition;
 }
 
 string SymbolTable::whichSymbol(short symbol) {

@@ -28,6 +28,7 @@ DIGIT [0-9]
 "tdg"					yylval.value = TYPETDG; return TDG;
 "sdg"					yylval.value = TYPESDG; return SDG;
 "cx"					return CX;
+"repeat"				return REPEAT;
 "measure"				yylval.value = TYPEMEASURE; return MEASURE;
 "bloch"					yylval.value = TYPEBLOCH; return BLOCH;
 
