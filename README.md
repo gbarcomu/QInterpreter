@@ -149,7 +149,7 @@ Such that m, n between 0-4.
 ``` 
 
 * Repeat instructions
- ```c
+```c
     repeat 5 {
         x q [1];
         h q [2];
@@ -157,16 +157,16 @@ Such that m, n between 0-4.
 ```
 
 * Comments
- ```c
+```c
     // This is a comment
 ```
 
 * Example
 
     ![Multiple Repeat Example](resources/multipleLoopExample.png)
- ```c  
-    repeat { 
-        id q[1,2,3];
+```c  
+    repeat 3 { // Do three times the instruction below 
+        id q[1,2,3]; // Place id gates in bit one, two and three
     }
 ```
 
