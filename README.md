@@ -45,10 +45,10 @@ For example, after a succesfull build, execute the next command:
 ### (Input) BellStateZZMeasurement.q
 
 ```c
+// Bell State ZZ Measurement
 h q[1];
 cx q[1], q[2];
-measure q[1];
-measure q[2];
+measure q[1,2];
 ```
 
 ### (Output) BellStateZZMeasurement.json
