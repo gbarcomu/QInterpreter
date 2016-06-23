@@ -164,9 +164,10 @@ Such that m, n between 0-4.
 * Example
 
     ![Multiple Repeat Example](resources/multipleLoopExample.png)
-```c  
+```c
+    h q [1,2,3]; // Place h gates in bit one, two and three
     repeat 3 { // Do three times the instruction below 
-        id q[1,2,3]; // Place id gates in bit one, two and three
+        id q [1,2,3]; // Place id gates in bit one, two and three
     }
 ```
 
