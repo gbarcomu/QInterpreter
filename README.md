@@ -122,6 +122,8 @@ measure q[2];
 
 ## Syntax
 
+### Simple Instructions
+
 ```c
 x q[n];
 y q[n];
@@ -139,7 +141,34 @@ bloch q[n];
 
 Such that m, n between 0-4.
 
-Comments with "//"
+### Complex instructions
+
+* Multiple bit gate
+```c
+    x q [1,2,4];
+``` 
+
+* Repeat instructions
+ ```c
+    repeat 5 {
+        x q [1];
+        h q [2];
+    }
+```
+
+* Comments
+ ```c
+    // This is a comment
+```
+
+* Example
+
+    ![Multiple Repeat Example](resources/multipleLoopExample.png)
+ ```c  
+    repeat { 
+        id q[1,2,3];
+    }
+```
 
 ## Errors Controlled
 

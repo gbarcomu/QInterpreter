@@ -1,4 +1,4 @@
-h q[1,2,3]; // place an id gate in bits 1, 2 and 3
+h q[1,2,3]; // place an h gate in bits 1, 2 and 3
 h q[2];
 cx q[1], q[2];
 cx q[3], q[2];
