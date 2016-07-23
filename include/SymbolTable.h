@@ -8,13 +8,13 @@
 #ifndef SYMBOLTABLE_H_
 #define SYMBOLTABLE_H_
 
-#include <iostream>
-#include <map>
-#include <iomanip>
-#include <cstring>
 #include <sstream>
 #include "Constants.h"
-using namespace std;
+
+using std::string;
+
+namespace qi 
+{
 
 class SymbolTable {
 
@@ -97,8 +97,10 @@ public:
 	}
 
 	short setBitSelected(int bit) {
-		bitsSelected[bit] = true;;
+		bitsSelected[bit] = true;return 0;
 	}
 };
+
+} // namespace qi
 
 #endif /* SYMBOLTABLE_H_ */

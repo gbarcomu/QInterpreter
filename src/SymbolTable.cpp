@@ -5,7 +5,19 @@
  *      Author: guille
  */
 
+
+#include <iostream>
+//#include <map>
+//#include <iomanip>
+//#include <cstring>
+
 #include "SymbolTable.h"
+
+using std::cout;
+using std::endl;
+
+namespace qi 
+{
 
 SymbolTable::SymbolTable() {
 
@@ -88,8 +100,8 @@ void SymbolTable::setPositionByBit(short bit, short newPosition) {
 	lastPositionTakenUp[bit] = newPosition;
 }
 
-SymbolTable::~SymbolTable() {
-
+SymbolTable::~SymbolTable()
+{
 //	printSymbolTable();
 }
 
@@ -211,3 +223,5 @@ void SymbolTable::cleanBitSelected() {
 		bitsSelected[i] = false;
 	}
 }
+
+} // namespace qi

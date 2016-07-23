@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <Flex Include="..\..\..\Lexer.l" />
+  </ItemGroup>
+  <ItemGroup>
+    <Bison Include="..\..\..\Parser.y" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\Constants.h" />
+    <ClInclude Include="..\..\..\include\ErrorController.h" />
+    <ClInclude Include="..\..\..\include\Expression.h" />
+    <ClInclude Include="..\..\..\include\Lexer.h" />
+    <ClInclude Include="..\..\..\include\Parser.h" />
+    <ClInclude Include="..\..\..\include\Printer.h" />
+    <ClInclude Include="..\..\..\include\QuantumAPIService.h" />
+    <ClInclude Include="..\..\..\include\SymbolTable.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\ErrorController.cpp" />
+    <ClCompile Include="..\..\..\src\Expression.cpp" />
+    <ClCompile Include="..\..\..\src\Lexer.cpp" />
+    <ClCompile Include="..\..\..\src\main.cpp" />
+    <ClCompile Include="..\..\..\src\Parser.cpp" />
+    <ClCompile Include="..\..\..\src\Printer.cpp" />
+    <ClCompile Include="..\..\..\src\QuantumAPIService.cpp" />
+    <ClCompile Include="..\..\..\src\SymbolTable.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0CF691C1-3CF0-4FA3-B9A2-243D168C9943}</ProjectGuid>
+    <RootNamespace>QInterpreter</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="..\..\..\3rdparty\win_flex_bison-latest\custom_build_rules\win_flex_bison_custom_build.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)../../build/win/x86/$(Configuration)\</OutDir>
+    <ExecutablePath>$(SolutionDir)..\..\3rdparty\win_flex_bison-latest;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)../../build/win/x86/$(Configuration)\</OutDir>
+    <ExecutablePath>$(SolutionDir)..\..\3rdparty\win_flex_bison-latest;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>E:\QInterpreter\QInterpreter\3rdparty\curl\curl-7.46.0-win32\include;E:\QInterpreter\QInterpreter\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>E:\QInterpreter\QInterpreter\3rdparty\curl\curl-7.46.0-win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>call $(SolutionDir)pre_build_steps.bat</Command>
+    </PreBuildEvent>
+    <Bison>
+      <OutputFile>src/%(Filename).cpp</OutputFile>
+    </Bison>
+    <Bison>
+      <DefinesFile>include/%(Filename).h</DefinesFile>
+    </Bison>
+    <Flex>
+      <OutputFile>src/%(Filename).cpp</OutputFile>
+      <HeaderFile>include/%(Filename).h</HeaderFile>
+    </Flex>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>E:\QInterpreter\QInterpreter\3rdparty\curl\curl-7.46.0-win32\include;E:\QInterpreter\QInterpreter\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>E:\QInterpreter\QInterpreter\3rdparty\curl\curl-7.46.0-win32\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>call $(SolutionDir)pre_build_steps.bat</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\..\3rdparty\win_flex_bison-latest\custom_build_rules\win_flex_bison_custom_build.targets" />
+  </ImportGroup>
+</Project>

@@ -4,67 +4,72 @@
  *  Created on: May 12, 2016
  *      Author: guille
  */
+#include <iostream>
 
 #include "Printer.h"
+#include "QuantumAPIService.h"
 
-Printer::Printer(SymbolTable *_symbolTable, string outputName) {
+using std::cout;
 
+namespace qi 
+{
+
+Printer::Printer(SymbolTable *_symbolTable, string outputName)
+	: symbolTable(_symbolTable)
+	, printFile(true)
+{
 	nameFile = outputName.substr(0, outputName.length() - 2) + ".json";
-
 	outputFlow.open(nameFile);
-	symbolTable = _symbolTable;
-	printFile = true;
-
-//	cout << "Creating " << nameFile << " file" << endl;
+	//	cout << "Creating " << nameFile << " file" << endl;
 }
 
-void Printer::dontGenerateFile() {
-
+void Printer::dontGenerateFile()
+{
 	printFile = false;
 }
 
-void Printer::printGates(int i) {
+void Printer::printGates(int i)
+{
+	for (int j = 0; j < VECTORMAXSIZE; j++)
+	{
+		if ( symbolTable->getSymbolByBitPosition(i, j) != NOVALUE && 
+			 symbolTable->getSymbolByBitPosition(i, j) != TYPESCXTO )
+		{
 
-	for (int j = 0; j < VECTORMAXSIZE; j++) {
-
-		if (symbolTable->getSymbolByBitPosition(i, j) != NOVALUE
-				&& symbolTable->getSymbolByBitPosition(i, j) != TYPESCXTO) {
-
-			outputFlow << "{" << "\"position\":" << j << "," << "\"name\": \""
-					<< symbolTable->whichSymbol(
-							(symbolTable->getSymbolByBitPosition(i, j)))
-					<< "\"";
+			outputFlow <<	"{" << "\"position\":" << j << "," << "\"name\": \"" << 
+							symbolTable->whichSymbol( (symbolTable->getSymbolByBitPosition(i, j))) << "\"";
 
 			printSpecialCaseCX(i, j);
 
 			outputFlow << "}";
 
-			if (printCommaIfNotLastValue(j, symbolTable->getPositionByBitExcludingCXTO(i) + 1)) {
-
+			if (printCommaIfNotLastValue(j, symbolTable->getPositionByBitExcludingCXTO(i) + 1))
+			{
 				printCommaIfGateClosed(i);
 			}
 		}
 	}
 }
 
-void Printer::printSpecialCaseCX(int i, int j) {
-
-	if (symbolTable->getSymbolByBitPosition(i, j) == TYPESCXFROM) {
-
+void Printer::printSpecialCaseCX(int i, int j)
+{
+	if (symbolTable->getSymbolByBitPosition(i, j) == TYPESCXFROM)
+	{
 		outputFlow << "," << "\"to\": ";
 
-		for (int k = 0; k < NUMBEROFBITS; k++) {
-
-			if (i > 0 && symbolTable->getSymbolByBitPosition(k, j)
-			== TYPESCXTO) {
+		for (int k = 0; k < NUMBEROFBITS; k++)
+		{
+			if ( i > 0 && 
+				 symbolTable->getSymbolByBitPosition(k, j) == TYPESCXTO )
+			{
 				outputFlow << k;
 			}
 		}
 	}
 }
 
-void Printer::print() {
-
+void Printer::print()
+{
 	outputFlow << "{" << "\"jsonQasm\": {" << "\"playground\": [";
 
 	printPlayground();
@@ -74,8 +79,8 @@ void Printer::print() {
 	printEndFile();
 }
 
-void Printer::printEndFile() {
-
+void Printer::printEndFile()
+{
 	outputFlow << "\"numberColumns\":" << VECTORMAXSIZE << ","
 			<< "\"numberLines\":" << NUMBEROFBITS << "," << "\"numberGates\":"
 			<< symbolTable->getNumberOfGates() << "," << "\"hasMeasures\":"
@@ -83,29 +88,28 @@ void Printer::printEndFile() {
 			<< "}}";
 }
 
-bool Printer::printCommaIfNotLastValue(short value1, short value2) {
-
-	if (value1 != (value2 - 1)) {
-
+bool Printer::printCommaIfNotLastValue(short value1, short value2)
+{
+	if (value1 != (value2 - 1))
+	{
 		outputFlow << ",";
 		return false;
 	}
-
 	return true;
 }
 
-void Printer::printCommaIfGateClosed(short bit) {
-
-	if (symbolTable->getBitState(bit) == BITSTATECLOSED) {
-
+void Printer::printCommaIfGateClosed(short bit)
+{
+	if (symbolTable->getBitState(bit) == BITSTATECLOSED)
+	{
 		outputFlow << ",";
 	}
 }
 
-void Printer::printPlayground() {
-
-	for (int i = 0; i < NUMBEROFBITS; i++) {
-
+void Printer::printPlayground()
+{
+	for (int i = 0; i < NUMBEROFBITS; i++)
+	{
 		outputFlow << "{" << "\"line\": " << i << "," << "\"name\": \"q\","
 				<< "\"gates\": [";
 
@@ -118,12 +122,12 @@ void Printer::printPlayground() {
 	}
 }
 
-void Printer::printFillWithEmptyDoors(int i) {
-
-	if (symbolTable->getBitState(i) == BITSTATECLOSED) {
-
-		for (int j = symbolTable->getPositionByBit(i); j < VECTORMAXSIZE; j++) {
-
+void Printer::printFillWithEmptyDoors(int i)
+{
+	if (symbolTable->getBitState(i) == BITSTATECLOSED)
+	{
+		for (int j = symbolTable->getPositionByBit(i); j < VECTORMAXSIZE; j++)
+		{
 			outputFlow << "{ \"position\":" << j << "}";
 			symbolTable->increseInOneNumberOfGates();
 			printCommaIfNotLastValue(j, VECTORMAXSIZE);
@@ -131,19 +135,19 @@ void Printer::printFillWithEmptyDoors(int i) {
 	}
 }
 
-Printer::~Printer() {
-
+Printer::~Printer()
+{
 	outputFlow.close();
-	if (!printFile) {
-
-		if (remove(nameFile.c_str()) != 0) {
-
+	if (!printFile)
+	{
+		if (remove(nameFile.c_str()) != 0)
+		{
 			cout << "Error deleting file";
 		} 
 	}
 
-	else {
-
+	else
+	{
 		QuantumAPIService *quantumAPIService = new QuantumAPIService(nameFile);
 
 		quantumAPIService->sendJsonFileToTheAPI();
@@ -151,3 +155,5 @@ Printer::~Printer() {
 		delete quantumAPIService;
 	}
 }
+
+} // namespace qi

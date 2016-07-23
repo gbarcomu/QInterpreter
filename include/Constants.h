@@ -8,6 +8,9 @@
 #ifndef CONSTANTS_H_
 #define CONSTANTS_H_
 
+namespace qi 
+{
+
 #define NOVALUE 0
 
 // Type of gates
@@ -48,5 +51,7 @@ const short VECTORMAXSIZE = 40;
 const short NUMBEROFBITS = 5;
 
 /***********************************************/
+
+} // namespace qi
 
 #endif /* CONSTANTS_H_ */

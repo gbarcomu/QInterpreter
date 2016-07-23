@@ -8,12 +8,13 @@
 #ifndef INCLUDE_QUANTUMAPISERVICE_H_
 #define INCLUDE_QUANTUMAPISERVICE_H_
 
-#include <fstream>
-#include <sstream>
-#include <iostream>
 #include <curl/curl.h>
 
-using namespace std;
+using std::string;
+using std::ifstream;
+
+namespace qi 
+{
 
 class QuantumAPIService {
 
@@ -22,8 +23,7 @@ private:
 	string fileName;
 
 	string json;
-	/*JSON file with the name of the experiment used for get the code ID*/
-	string jsonExperimentName;
+	string jsonExperimentName; //JSON file with the name of the experiment used for get the code ID
 	ifstream inputFlow;
 	CURL *curl;
 
@@ -41,6 +41,8 @@ public:
 
 	virtual ~QuantumAPIService();
 };
+
+} // namespace qi
 
 #endif /* INCLUDE_QUANTUMAPISERVICE_H_ */
 

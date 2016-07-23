@@ -8,27 +8,24 @@
 #ifndef ERRORCONTROLLER_H_
 #define ERRORCONTROLLER_H_
 
-#include <iostream>
 #include "Constants.h"
 #include "Printer.h"
 
-extern int n_lines;
-
-using namespace std;
+namespace qi
+{
 
 class ErrorController {
 
 private:
-
 	Printer *printer;
 
 public:
-	
 	ErrorController(Printer *_printer);
+	~ErrorController();
 
 	void errorCatcher(short errorCode,const char *parameter1 = NULL, const char *parameter2 = NULL, const char *parameter3 = NULL);
-
-	~ErrorController();
 };
+
+} // namespace qi
 
 #endif /* ERRORCONTROLLER_H_ */

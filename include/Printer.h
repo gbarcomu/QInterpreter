@@ -8,19 +8,19 @@
 #ifndef PRINTER_H_
 #define PRINTER_H_
 
-#include "Constants.h"
 #include <fstream>
-#include <sstream>
 #include "SymbolTable.h"
-#include "QuantumAPIService.h"
+
+using std::ofstream;
+
+namespace qi 
+{
 
 class Printer {
 
 private:
-
 	SymbolTable *symbolTable;
 	ofstream outputFlow;
-
 	bool printFile;
 	string nameFile;
 
@@ -34,12 +34,12 @@ private:
 
 public:
 	Printer(SymbolTable *_symbolTable, string outputName);
+	~Printer();
 
 	void dontGenerateFile();
-
 	void print();
-
-	~Printer();
 };
+
+} // namespace qi
 
 #endif /* PRINTER_H_ */

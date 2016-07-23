@@ -5,7 +5,16 @@
  *      Author: guille
  */
 
+#include <iostream>
 #include "ErrorController.h"
+
+extern int n_lines;
+
+using std::cout;
+using std::endl;
+
+namespace qi
+{
 
 ErrorController::ErrorController(Printer *_printer) {
 
@@ -44,3 +53,4 @@ void ErrorController::errorCatcher(short errorCode, const char* parameter1,
 ErrorController::~ErrorController() {
 }
 
+} // namespace qi
