@@ -19,7 +19,7 @@ Printer::Printer(SymbolTable *_symbolTable, string outputName)
 	, printFile(true)
 {
 	nameFile = outputName.substr(0, outputName.length() - 2) + ".json";
-	outputFlow.open(nameFile);
+	outputFlow.open(nameFile.c_str());
 	//	cout << "Creating " << nameFile << " file" << endl;
 }
 
