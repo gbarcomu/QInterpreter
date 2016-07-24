@@ -114,6 +114,14 @@
     <PreBuildEvent>
       <Command>call $(SolutionDir)pre_build_steps.bat</Command>
     </PreBuildEvent>
+    <Flex>
+      <OutputFile>src/%(Filename).cpp</OutputFile>
+      <HeaderFile>include/%(Filename).h</HeaderFile>
+    </Flex>
+    <Bison>
+      <OutputFile>src/%(Filename).cpp</OutputFile>
+      <DefinesFile>include/%(Filename).h</DefinesFile>
+    </Bison>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
