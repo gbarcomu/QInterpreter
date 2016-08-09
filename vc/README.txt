@@ -27,6 +27,8 @@ If failed:
 If api-ms-win-crt-runtime-l1-1-0.dll is missing
 	install windows updates IN NEXT ORDER(ORDER IS CRITICAL):
 	1. 2919442 https://support.microsoft.com/en-us/kb/2919442
+	(may fail to install - whatever go to the next step)	
+
 	2919355 https://support.microsoft.com/en-us/kb/2919355 
 	WAIT! KEEP THE ORDER!
 	2. clearcompressionflag.exe
@@ -39,6 +41,10 @@ If api-ms-win-crt-runtime-l1-1-0.dll is missing
 	9. 2999226 https://support.microsoft.com/en-us/kb/2999226
 	10. Download and install the Visual C++ Redistributable 2015
 	11. Do not forget praying to Bill Gates for Great OS ^_^
+
+
+Flex options for Windows:
+win_flex.exe --outfile="src/Lexer.cpp" --header-file="include/Lexer.h" --wincompat --bison-bridge --reentrant "Lexer.l" --warn --nodefault --noyywrap --never-interactive --nounistd 
 
 ______________________________
 Anyway, be free to contact me:

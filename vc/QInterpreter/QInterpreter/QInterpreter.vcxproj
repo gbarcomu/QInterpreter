@@ -11,7 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <Flex Include="..\..\..\Lexer.l" />
+    <Flex Include="..\..\..\Lexer.l">
+      <BisonBridge Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</BisonBridge>
+      <Reentrant Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</Reentrant>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">--warn --nodefault --noyywrap --never-interactive --nounistd %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">--warn --nodefault --noyywrap --never-interactive --nounistd %(AdditionalOptions)</AdditionalOptions>
+      <BisonBridge Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</BisonBridge>
+      <Reentrant Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</Reentrant>
+    </Flex>
   </ItemGroup>
   <ItemGroup>
     <Bison Include="..\..\..\Parser.y" />

@@ -9,10 +9,6 @@ int n_lines;
  
 %}
  
-%option warn nodefault
-%option reentrant noyywrap never-interactive nounistd
-%option bison-bridge
-
 %x COM
 
 DIGIT [0-9]
