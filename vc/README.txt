@@ -42,7 +42,10 @@ If api-ms-win-crt-runtime-l1-1-0.dll is missing
 	10. Download and install the Visual C++ Redistributable 2015
 	11. Do not forget praying to Bill Gates for Great OS ^_^
 
-
+If VCRUNTIME140.dll is missing
+	install x86 Visual C++ Redistributable for Visual Studio 2015 
+	https://www.microsoft.com/en-us/download/details.aspx?id=48145
+	
 Flex options for Windows:
 win_flex.exe --outfile="src/Lexer.cpp" --header-file="include/Lexer.h" --wincompat --bison-bridge --reentrant "Lexer.l" --warn --nodefault --noyywrap --never-interactive --nounistd 
 
